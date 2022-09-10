@@ -1,9 +1,13 @@
 # Change Log
 
-All notable changes to the "pbbs" extension will be documented in this file.
+## [0.1.1] - 2022-08-10
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+### Changed
 
-## [Unreleased]
+- add badges in readme
+- add demo
+- move files around
+
+## [0.1.0] - 2022-08-10
 
 - Initial release

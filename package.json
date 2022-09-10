@@ -3,7 +3,7 @@
   "displayName": "Pure Bash Bible",
   "private": true,
   "description": "A collection of pure bash alternatives to external processes.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "pombadev",
   "icon": "src/icon.png",
   "license": "MIT",
@@ -40,7 +40,7 @@
     ]
   },
   "scripts": {
-    "test": "NODE_ENV=pbbs node generator.js; node test.js"
+    "test": "NODE_ENV=pbbs node scripts/generator.js; node scripts/test.js"
   },
   "devDependencies": {
     "marked": "^4.0.18"
