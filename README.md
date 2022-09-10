@@ -1,9 +1,7 @@
 # pbbs
 
-[![Version](https://vsmarketplacebadge.apphb.com/version-short/pombadev.pbbs.svg)](https://marketplace.visualstudio.com/items?itemName=pombadev.pbbs)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs/pombadev.pbbs.svg)](https://marketplace.visualstudio.com/items?itemName=pombadev.pbbs)
-[![Downloads](https://vsmarketplacebadge.apphb.com/downloads/pombadev.pbbs.svg)](https://marketplace.visualstudio.com/items?itemName=pombadev.pbbs)
-[![Ratings](https://vsmarketplacebadge.apphb.com/rating-short/pombadev.pbbs.svg)](https://marketplace.visualstudio.com/items?itemName=pombadev.pbbs)
+[![Marketplace](https://img.shields.io/visual-studio-marketplace/v/pombadev.pbbs?label=marketplace%20version&style=flat-square)](https://marketplace.visualstudio.com/items?itemName=pombadev.pbbs)
+[![GitHub](https://img.shields.io/github/package-json/v/pombadev/pbbs?label=github%20version&style=flat-square)](https://marketplace.visualstudio.com/items?itemName=pombadev.pbbs)
 
 `pbbs` is a VS Code snippets extension that has a collection of pure bash alternatives to external processes.
 
