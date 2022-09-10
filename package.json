@@ -1,0 +1,50 @@
+{
+  "name": "pbbs",
+  "displayName": "Pure Bash Bible",
+  "private": true,
+  "description": "A collection of pure bash alternatives to external processes.",
+  "version": "0.1.0",
+  "publisher": "pombadev",
+  "icon": "src/icon.png",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pombadev/pbbs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pombadev/pbbs/issues"
+  },
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "type": "module",
+  "categories": [
+    "Snippets"
+  ],
+  "keywords": [
+    "bash",
+    "shell",
+    "shellscript",
+    "pure bash bible"
+  ],
+  "contributes": {
+    "snippets": [
+      {
+        "language": "shellscript",
+        "path": "./src/snippets.json"
+      },
+      {
+        "language": "markdown",
+        "path": "./src/snippets.json"
+      }
+    ]
+  },
+  "scripts": {
+    "test": "NODE_ENV=pbbs node generator.js; node test.js"
+  },
+  "devDependencies": {
+    "marked": "^4.0.18"
+  },
+  "homepage": "https://github.com/pombadev/pbbs#readme",
+  "author": "pombadev"
+}

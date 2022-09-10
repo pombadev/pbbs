@@ -1,0 +1,442 @@
+{
+    "shebang": {
+        "prefix": "shebang",
+        "body": "#!/usr/bin/env ${1:bash}\n\n$0",
+        "description": "Add a shebang line"
+    },
+    "strings": [
+        {
+            "body": "trim_string() {\n    # Usage: trim_string \"   example   string    \"\n    : \"${1#\"${1%%[![:space:]]*}\"}\"\n    : \"${_%\"${_##*[![:space:]]}\"}\"\n    printf '%s\\n' \"\\$_\"\n}",
+            "prefix": "trim_leading_and_trailing_white-space_from_string",
+            "description": "Trim leading and trailing white-space from string"
+        },
+        {
+            "body": "# shellcheck disable=SC2086,SC2048\ntrim_all() {\n    # Usage: trim_all \"   example   string    \"\n    set -f\n    set -- $*\n    printf '%s\\n' \"$*\"\n    set +f\n}",
+            "prefix": "trim_all_white-space_from_string_and_truncate_spaces",
+            "description": "Trim all white-space from string and truncate spaces"
+        },
+        {
+            "body": "regex() {\n    # Usage: regex \"string\" \"regex\"\n    [[ \\$1 =~ \\$2 ]] && printf '%s\\n' \"${BASH_REMATCH[1]}\"\n}",
+            "prefix": "use_regex_on_a_string",
+            "description": "Use regex on a string"
+        },
+        {
+            "body": "split() {\n   # Usage: split \"string\" \"delimiter\"\n   IFS=$'\\n' read -d \"\" -ra arr <<< \"${1//\\$2/$'\\n'}\"\n   printf '%s\\n' \"${arr[@]}\"\n}",
+            "prefix": "split_a_string_on_a_delimiter",
+            "description": "Split a string on a delimiter"
+        },
+        {
+            "body": "lower() {\n    # Usage: lower \"string\"\n    printf '%s\\n' \"${1,,}\"\n}",
+            "prefix": "change_a_string_to_lowercase",
+            "description": "Change a string to lowercase"
+        },
+        {
+            "body": "upper() {\n    # Usage: upper \"string\"\n    printf '%s\\n' \"${1^^}\"\n}",
+            "prefix": "change_a_string_to_uppercase",
+            "description": "Change a string to uppercase"
+        },
+        {
+            "body": "reverse_case() {\n    # Usage: reverse_case \"string\"\n    printf '%s\\n' \"${1~~}\"\n}",
+            "prefix": "reverse_a_string_case",
+            "description": "Reverse a string case"
+        },
+        {
+            "body": "trim_quotes() {\n    # Usage: trim_quotes \"string\"\n    : \"${1//\\'}\"\n    printf '%s\\n' \"${_//\\\"}\"\n}",
+            "prefix": "trim_quotes_from_a_string",
+            "description": "Trim quotes from a string"
+        },
+        {
+            "body": "strip_all() {\n    # Usage: strip_all \"string\" \"pattern\"\n    printf '%s\\n' \"${1//\\$2}\"\n}",
+            "prefix": "strip_all_instances_of_pattern_from_string",
+            "description": "Strip all instances of pattern from string"
+        },
+        {
+            "body": "strip() {\n    # Usage: strip \"string\" \"pattern\"\n    printf '%s\\n' \"${1/\\$2}\"\n}",
+            "prefix": "strip_first_occurrence_of_pattern_from_string",
+            "description": "Strip first occurrence of pattern from string"
+        },
+        {
+            "body": "lstrip() {\n    # Usage: lstrip \"string\" \"pattern\"\n    printf '%s\\n' \"${1##\\$2}\"\n}",
+            "prefix": "strip_pattern_from_start_of_string",
+            "description": "Strip pattern from start of string"
+        },
+        {
+            "body": "rstrip() {\n    # Usage: rstrip \"string\" \"pattern\"\n    printf '%s\\n' \"${1%%\\$2}\"\n}",
+            "prefix": "strip_pattern_from_end_of_string",
+            "description": "Strip pattern from end of string"
+        },
+        {
+            "body": "urlencode() {\n    # Usage: urlencode \"string\"\n    local LC_ALL=C\n    for (( i = 0; i < ${#1}; i++ )); do\n        : \"\\${1:i:1}\"\n        case \"\\$_\" in\n            [a-zA-Z0-9.~_-])\n                printf '%s' \"\\$_\"\n            ;;\n\n            *)\n                printf '%%%02X' \"'\\$_\"\n            ;;\n        esac\n    done\n    printf '\\n'\n}",
+            "prefix": "percent-encode_a_string",
+            "description": "Percent-encode a string"
+        },
+        {
+            "body": "urldecode() {\n    # Usage: urldecode \"string\"\n    : \"${1//+/ }\"\n    printf '%b\\n' \"${_//%/\\\\\\x}\"\n}",
+            "prefix": "decode_a_percent-encoded_string",
+            "description": "Decode a percent-encoded string"
+        },
+        {
+            "body": "case \"\\$var\" in\n    *sub_string*)\n        # Do stuff\n    ;;\n\n    *sub_string2*)\n        # Do more stuff\n    ;;\n\n    *)\n        # Else\n    ;;\nesac",
+            "prefix": "check_if_string_contains_a_sub-string",
+            "description": "Check if string contains a sub-string"
+        },
+        {
+            "body": "if [[ \\$var == sub_string* ]]; then\n    printf '%s\\n' \"var starts with sub_string.\"\nfi\n\n# Inverse (var does not start with sub_string).\nif [[ \\$var != sub_string* ]]; then\n    printf '%s\\n' \"var does not start with sub_string.\"\nfi",
+            "prefix": "check_if_string_starts_with_sub-string",
+            "description": "Check if string starts with sub-string"
+        },
+        {
+            "body": "if [[ \\$var == *sub_string ]]; then\n    printf '%s\\n' \"var ends with sub_string.\"\nfi\n\n# Inverse (var does not end with sub_string).\nif [[ \\$var != *sub_string ]]; then\n    printf '%s\\n' \"var does not end with sub_string.\"\nfi",
+            "prefix": "check_if_string_ends_with_sub-string",
+            "description": "Check if string ends with sub-string"
+        }
+    ],
+    "arrays": [
+        {
+            "body": "reverse_array() {\n    # Usage: reverse_array \"array\"\n    shopt -s extdebug\n    f()(printf '%s\\n' \"${BASH_ARGV[@]}\"); f \"$@\"\n    shopt -u extdebug\n}",
+            "prefix": "reverse_an_array",
+            "description": "Reverse an array"
+        },
+        {
+            "body": "remove_array_dups() {\n    # Usage: remove_array_dups \"array\"\n    declare -A tmp_array\n\n    for i in \"$@\"; do\n        [[ \\$i ]] && IFS=\" \" tmp_array[\"\\${i:- }\"]=1\n    done\n\n    printf '%s\\n' \"${!tmp_array[@]}\"\n}",
+            "prefix": "remove_duplicate_array_elements",
+            "description": "Remove duplicate array elements"
+        },
+        {
+            "body": "random_array_element() {\n    # Usage: random_array_element \"array\"\n    local arr=(\"$@\")\n    printf '%s\\n' \"${arr[RANDOM % $#]}\"\n}",
+            "prefix": "random_array_element",
+            "description": "Random array element"
+        },
+        {
+            "body": "arr=(a b c d)\n\ncycle() {\n    printf '%s ' \"${arr[${i:=0}]}\"\n    ((i=i>=${#arr[@]}-1?0:++i))\n}",
+            "prefix": "cycle_through_an_array",
+            "description": "Cycle through an array"
+        },
+        {
+            "body": "arr=(true false)\n\ncycle() {\n    printf '%s ' \"${arr[${i:=0}]}\"\n    ((i=i>=${#arr[@]}-1?0:++i))\n}",
+            "prefix": "toggle_between_two_values",
+            "description": "Toggle between two values"
+        }
+    ],
+    "loops": [
+        {
+            "body": "# Loop from 0-100 (no variable support).\nfor i in {0..100}; do\n    printf '%s\\n' \"\\$i\"\ndone",
+            "prefix": "loop_over_a_range_of_numbers",
+            "description": "Loop over a range of numbers"
+        },
+        {
+            "body": "# Loop from 0-VAR.\nVAR=50\nfor ((i=0;i<=VAR;i++)); do\n    printf '%s\\n' \"\\$i\"\ndone",
+            "prefix": "loop_over_a_variable_range_of_numbers",
+            "description": "Loop over a variable range of numbers"
+        },
+        {
+            "body": "arr=(apples oranges tomatoes)\n\n# Just elements.\nfor element in \"${arr[@]}\"; do\n    printf '%s\\n' \"\\$element\"\ndone",
+            "prefix": "loop_over_an_array",
+            "description": "Loop over an array"
+        },
+        {
+            "body": "arr=(apples oranges tomatoes)\n\n# Elements and index.\nfor i in \"${!arr[@]}\"; do\n    printf '%s\\n' \"${arr[i]}\"\ndone\n\n# Alternative method.\nfor ((i=0;i<${#arr[@]};i++)); do\n    printf '%s\\n' \"${arr[i]}\"\ndone",
+            "prefix": "loop_over_an_array_with_an_index",
+            "description": "Loop over an array with an index"
+        },
+        {
+            "body": "while read -r line; do\n    printf '%s\\n' \"\\$line\"\ndone < \"file\"",
+            "prefix": "loop_over_the_contents_of_a_file",
+            "description": "Loop over the contents of a file"
+        },
+        {
+            "body": "# Greedy example.\nfor file in *; do\n    printf '%s\\n' \"\\$file\"\ndone\n\n# PNG files in dir.\nfor file in ~/Pictures/*.png; do\n    printf '%s\\n' \"\\$file\"\ndone\n\n# Iterate over directories.\nfor dir in ~/Downloads/*/; do\n    printf '%s\\n' \"\\$dir\"\ndone\n\n# Brace Expansion.\nfor file in /path/to/parentdir/{file1,file2,subdir/file3}; do\n    printf '%s\\n' \"\\$file\"\ndone\n\n# Iterate recursively.\nshopt -s globstar\nfor file in ~/Pictures/**/*; do\n    printf '%s\\n' \"\\$file\"\ndone\nshopt -u globstar",
+            "prefix": "loop_over_files_and_directories",
+            "description": "Loop over files and directories"
+        }
+    ],
+    "file handling": [
+        {
+            "body": "file_data=\"$(<\"file\")\"",
+            "prefix": "read_a_file_to_a_string",
+            "description": "Read a file to a string"
+        },
+        {
+            "body": "# Bash <4 (discarding empty lines).\nIFS=$'\\n' read -d \"\" -ra file_data < \"file\"\n\n# Bash <4 (preserving empty lines).\nwhile read -r line; do\n    file_data+=(\"\\$line\")\ndone < \"file\"\n\n# Bash 4+\nmapfile -t file_data < \"file\"",
+            "prefix": "read_a_file_to_an_array_(*by_line*)",
+            "description": "Read a file to an array (*by line*)"
+        },
+        {
+            "body": "head() {\n    # Usage: head \"n\" \"file\"\n    mapfile -tn \"\\$1\" line < \"\\$2\"\n    printf '%s\\n' \"${line[@]}\"\n}",
+            "prefix": "get_the_first_n_lines_of_a_file",
+            "description": "Get the first N lines of a file"
+        },
+        {
+            "body": "tail() {\n    # Usage: tail \"n\" \"file\"\n    mapfile -tn 0 line < \"\\$2\"\n    printf '%s\\n' \"${line[@]: -\\$1}\"\n}",
+            "prefix": "get_the_last_n_lines_of_a_file",
+            "description": "Get the last N lines of a file"
+        },
+        {
+            "body": "lines() {\n    # Usage: lines \"file\"\n    mapfile -tn 0 lines < \"\\$1\"\n    printf '%s\\n' \"${#lines[@]}\"\n}",
+            "prefix": "get_the_number_of_lines_in_a_file",
+            "description": "Get the number of lines in a file"
+        },
+        {
+            "body": "count() {\n    # Usage: count /path/to/dir/*\n    #        count /path/to/dir/*/\n    printf '%s\\n' \"$#\"\n}",
+            "prefix": "count_files_or_directories_in_directory",
+            "description": "Count files or directories in directory"
+        },
+        {
+            "body": "# Shortest.\n>file\n\n# Longer alternatives:\n:>file\necho -n >file\nprintf '' >file",
+            "prefix": "create_an_empty_file",
+            "description": "Create an empty file"
+        },
+        {
+            "body": "extract() {\n    # Usage: extract file \"opening marker\" \"closing marker\"\n    while IFS=$'\\n' read -r line; do\n        [[ \\$extract && \\$line != \"\\$3\" ]] &&\n            printf '%s\\n' \"\\$line\"\n\n        [[ \\$line == \"\\$2\" ]] && extract=1\n        [[ \\$line == \"\\$3\" ]] && extract=\n    done < \"\\$1\"\n}",
+            "prefix": "extract_lines_between_two_markers",
+            "description": "Extract lines between two markers"
+        }
+    ],
+    "file paths": [
+        {
+            "body": "dirname() {\n    # Usage: dirname \"path\"\n    local tmp=\\${1:-.}\n\n    [[ \\$tmp != *[!/]* ]] && {\n        printf '/\\n'\n        return\n    }\n\n    tmp=${tmp%%\"${tmp##*[!/]}\"}\n\n    [[ \\$tmp != */* ]] && {\n        printf '.\\n'\n        return\n    }\n\n    tmp=${tmp%/*}\n    tmp=${tmp%%\"${tmp##*[!/]}\"}\n\n    printf '%s\\n' \"${tmp:-/}\"\n}",
+            "prefix": "get_the_directory_name_of_a_file_path",
+            "description": "Get the directory name of a file path"
+        },
+        {
+            "body": "basename() {\n    # Usage: basename \"path\" [\"suffix\"]\n    local tmp\n\n    tmp=${1%\"${1##*[!/]}\"}\n    tmp=${tmp##*/}\n    tmp=${tmp%\"${2/\"\\$tmp\"}\"}\n\n    printf '%s\\n' \"${tmp:-/}\"\n}",
+            "prefix": "get_the_base-name_of_a_file_path",
+            "description": "Get the base-name of a file path"
+        }
+    ],
+    "variables": [
+        {
+            "body": "$ hello_world=\"value\"\n$ var=\"world\"\n\n# Declare a nameref.\n$ declare -n ref=hello_\\$var\n\n$ printf '%s\\n' \"\\$ref\"\nvalue",
+            "prefix": "assign_and_access_a_variable_using_a_variable",
+            "description": "Assign and access a variable using a variable"
+        },
+        {
+            "body": "$ var=\"world\"\n$ declare \"hello_\\$var=value\"\n$ printf '%s\\n' \"\\$hello_world\"\nvalue",
+            "prefix": "name_a_variable_based_on_another_variable",
+            "description": "Name a variable based on another variable"
+        }
+    ],
+    "brace expansion": [
+        {
+            "body": "# Syntax: {<START>..<END>}\n\n# Print numbers 1-100.\necho {1..100}\n\n# Print range of floats.\necho 1.{1..9}\n\n# Print chars a-z.\necho {a..z}\necho {A..Z}\n\n# Nesting.\necho {A..Z}{0..9}\n\n# Print zero-padded numbers.\n# CAVEAT: bash 4+\necho {01..100}\n\n# Change increment amount.\n# Syntax: {<START>..<END>..<INCREMENT>}\n# CAVEAT: bash 4+\necho {1..10..2} # Increment by 2.",
+            "prefix": "ranges",
+            "description": "Ranges"
+        },
+        {
+            "body": "echo {apples,oranges,pears,grapes}\n\n# Example Usage:\n# Remove dirs Movies, Music and ISOS from ~/Downloads/.\nrm -rf ~/Downloads/{Movies,Music,ISOS}",
+            "prefix": "string_lists",
+            "description": "String Lists"
+        }
+    ],
+    "arithmetic": [
+        {
+            "body": "# Simple math\n((var=1+2))\n\n# Decrement/Increment variable\n((var++))\n((var--))\n((var+=1))\n((var-=1))\n\n# Using variables\n((var=var2*arr[2]))",
+            "prefix": "simpler_syntax_to_set_variables",
+            "description": "Simpler syntax to set variables"
+        },
+        {
+            "body": "# Set the value of var to var2 if var2 is greater than var.\n# var: variable to set.\n# var2>var: Condition to test.\n# ?var2: If the test succeeds.\n# :var: If the test fails.\n((var=var2>var?var2:var))",
+            "prefix": "ternary_tests",
+            "description": "Ternary Tests"
+        }
+    ],
+    "traps": [
+        {
+            "body": "# Clear screen on script exit.\ntrap 'printf \\\\e[2J\\\\e[H\\\\e[m' EXIT",
+            "prefix": "do_something_on_script_exit",
+            "description": "Do something on script exit"
+        },
+        {
+            "body": "trap '' INT",
+            "prefix": "ignore_terminal_interrupt_(ctrl+c,_sigint)",
+            "description": "Ignore terminal interrupt (CTRL+C, SIGINT)"
+        },
+        {
+            "body": "# Call a function on window resize.\ntrap 'code_here' SIGWINCH",
+            "prefix": "react_to_window_resize",
+            "description": "React to window resize"
+        },
+        {
+            "body": "trap 'code_here' DEBUG",
+            "prefix": "do_something_before_every_command",
+            "description": "Do something before every command"
+        },
+        {
+            "body": "trap 'code_here' RETURN",
+            "prefix": "do_something_when_a_shell_function_or_a_sourced_file_finishes_executing",
+            "description": "Do something when a shell function or a sourced file finishes executing"
+        }
+    ],
+    "performance": [
+        {
+            "body": "# Disable unicode.\nLC_ALL=C\nLANG=C",
+            "prefix": "disable_unicode",
+            "description": "Disable Unicode"
+        }
+    ],
+    "internal variables": [
+        {
+            "body": "\"\\$BASH\"",
+            "prefix": "get_the_location_to_the_`bash`_binary",
+            "description": "Get the location to the `bash` binary"
+        },
+        {
+            "body": "# As a string.\n\"\\$BASH_VERSION\"\n\n# As an array.\n\"\\${BASH_VERSINFO[@]}\"",
+            "prefix": "get_the_version_of_the_current_running_`bash`_process",
+            "description": "Get the version of the current running `bash` process"
+        },
+        {
+            "body": "\"\\$EDITOR\" \"\\$file\"\n\n# NOTE: This variable may be empty, set a fallback value.\n\"\\${EDITOR:-vi}\" \"\\$file\"",
+            "prefix": "open_the_user's_preferred_text_editor",
+            "description": "Open the user's preferred text editor"
+        },
+        {
+            "body": "# Current function.\n\"${FUNCNAME[0]}\"\n\n# Parent function.\n\"${FUNCNAME[1]}\"\n\n# So on and so forth.\n\"${FUNCNAME[2]}\"\n\"${FUNCNAME[3]}\"\n\n# All functions including parents.\n\"${FUNCNAME[@]}\"",
+            "prefix": "get_the_name_of_the_current_function",
+            "description": "Get the name of the current function"
+        },
+        {
+            "body": "\"\\$HOSTNAME\"\n\n# NOTE: This variable may be empty.\n# Optionally set a fallback to the hostname command.\n\"\\${HOSTNAME:-$(hostname)}\"",
+            "prefix": "get_the_host-name_of_the_system",
+            "description": "Get the host-name of the system"
+        },
+        {
+            "body": "\"\\$HOSTTYPE\"",
+            "prefix": "get_the_architecture_of_the_operating_system",
+            "description": "Get the architecture of the Operating System"
+        },
+        {
+            "body": "\"\\$OSTYPE\"",
+            "prefix": "get_the_name_of_the_operating_system_/_kernel",
+            "description": "Get the name of the Operating System / Kernel"
+        },
+        {
+            "body": "\"\\$PWD\"",
+            "prefix": "get_the_current_working_directory",
+            "description": "Get the current working directory"
+        },
+        {
+            "body": "\"\\$SECONDS\"",
+            "prefix": "get_the_number_of_seconds_the_script_has_been_running",
+            "description": "Get the number of seconds the script has been running"
+        },
+        {
+            "body": "\"\\$RANDOM\"",
+            "prefix": "get_a_pseudorandom_integer",
+            "description": "Get a pseudorandom integer"
+        }
+    ],
+    "information about the terminal": [
+        {
+            "body": "get_term_size() {\n    # Usage: get_term_size\n\n    # (:;:) is a micro sleep to ensure the variables are\n    # exported immediately.\n    shopt -s checkwinsize; (:;:)\n    printf '%s\\n' \"\\$LINES \\$COLUMNS\"\n}",
+            "prefix": "get_the_terminal_size_in_lines_and_columns_(*from_a_script*)",
+            "description": "Get the terminal size in lines and columns (*from a script*)"
+        },
+        {
+            "body": "get_window_size() {\n    # Usage: get_window_size\n    printf '%b' \"\\${TMUX:+\\\\\\ePtmux;\\\\\\e}\\\\\\e[14t\\${TMUX:+\\\\\\e\\\\\\\\\\\\\\\\}\"\n    IFS=';t' read -d t -t 0.05 -sra term_size\n    printf '%s\\n' \"${term_size[1]}x${term_size[2]}\"\n}",
+            "prefix": "get_the_terminal_size_in_pixels",
+            "description": "Get the terminal size in pixels"
+        },
+        {
+            "body": "get_cursor_pos() {\n    # Usage: get_cursor_pos\n    IFS='[;' read -p $'\\e[6n' -d R -rs _ y x _\n    printf '%s\\n' \"\\$x \\$y\"\n}",
+            "prefix": "get_the_current_cursor_position",
+            "description": "Get the current cursor position"
+        }
+    ],
+    "conversion": [
+        {
+            "body": "hex_to_rgb() {\n    # Usage: hex_to_rgb \"#FFFFFF\"\n    #        hex_to_rgb \"000000\"\n    : \"${1/\\#}\"\n    ((r=16#${_:0:2},g=16#${_:2:2},b=16#${_:4:2}))\n    printf '%s\\n' \"\\$r \\$g \\$b\"\n}",
+            "prefix": "convert_a_hex_color_to_rgb",
+            "description": "Convert a hex color to RGB"
+        },
+        {
+            "body": "rgb_to_hex() {\n    # Usage: rgb_to_hex \"r\" \"g\" \"b\"\n    printf '#%02x%02x%02x\\n' \"\\$1\" \"\\$2\" \"\\$3\"\n}",
+            "prefix": "convert_an_rgb_color_to_hex",
+            "description": "Convert an RGB color to hex"
+        }
+    ],
+    "code golf": [
+        {
+            "body": "# Tiny C Style.\nfor((;i++<10;)){ echo \"\\$i\";}\n\n# Undocumented method.\nfor i in {1..10};{ echo \"\\$i\";}\n\n# Expansion.\nfor i in {1..10}; do echo \"\\$i\"; done\n\n# C Style.\nfor((i=0;i<=10;i++)); do echo \"\\$i\"; done",
+            "prefix": "shorter_`for`_loop_syntax",
+            "description": "Shorter `for` loop syntax"
+        },
+        {
+            "body": "# Normal method\nwhile :; do echo hi; done\n\n# Shorter\nfor((;;)){ echo hi;}",
+            "prefix": "shorter_infinite_loops",
+            "description": "Shorter infinite loops"
+        },
+        {
+            "body": "# Normal method\nf(){ echo hi;}\n\n# Using a subshell\nf()(echo hi)\n\n# Using arithmetic\n# This can be used to assign integer values.\n# Example: f a=1\n#          f a++\nf()((\\$1))\n\n# Using tests, loops etc.\n# NOTE: ‘while’, ‘until’, ‘case’, ‘(())’, ‘[[]]’ can also be used.\nf()if true; then echo \"\\$1\"; fi\nf()for i in \"$@\"; do echo \"\\$i\"; done",
+            "prefix": "shorter_function_declaration",
+            "description": "Shorter function declaration"
+        },
+        {
+            "body": "# One line\n# Note: The 3rd statement may run when the 1st is true\n[[ \\$var == hello ]] && echo hi || echo bye\n[[ \\$var == hello ]] && { echo hi; echo there; } || echo bye\n\n# Multi line (no else, single statement)\n# Note: The exit status may not be the same as with an if statement\n[[ \\$var == hello ]] &&\n    echo hi\n\n# Multi line (no else)\n[[ \\$var == hello ]] && {\n    echo hi\n    # ...\n}",
+            "prefix": "shorter_`if`_syntax",
+            "description": "Shorter `if` syntax"
+        },
+        {
+            "body": "# Modified snippet from Neofetch.\ncase \"\\$OSTYPE\" in\n    \"darwin\"*)\n        : \"MacOS\"\n    ;;\n\n    \"linux\"*)\n        : \"Linux\"\n    ;;\n\n    *\"bsd\"* | \"dragonfly\" | \"bitrig\")\n        : \"BSD\"\n    ;;\n\n    \"cygwin\" | \"msys\" | \"win32\")\n        : \"Windows\"\n    ;;\n\n    *)\n        printf '%s\\n' \"Unknown OS detected, aborting...\" >&2\n        exit 1\n    ;;\nesac\n\n# Finally, set the variable.\nos=\"\\$_\"",
+            "prefix": "simpler_`case`_statement_to_set_variable",
+            "description": "Simpler `case` statement to set variable"
+        }
+    ],
+    "other": [
+        {
+            "body": "read_sleep() {\n    # Usage: read_sleep 1\n    #        read_sleep 0.2\n    read -rt \"\\$1\" <> <(:) || :\n}",
+            "prefix": "use_`read`_as_an_alternative_to_the_`sleep`_command",
+            "description": "Use `read` as an alternative to the `sleep` command"
+        },
+        {
+            "body": "# There are 3 ways to do this and either one can be used.\ntype -p executable_name &>/dev/null\nhash executable_name &>/dev/null\ncommand -v executable_name &>/dev/null\n\n# As a test.\nif type -p executable_name &>/dev/null; then\n    # Program is in PATH.\nfi\n\n# Inverse.\nif ! type -p executable_name &>/dev/null; then\n    # Program is not in PATH.\nfi\n\n# Example (Exit early if program is not installed).\nif ! type -p convert &>/dev/null; then\n    printf '%s\\n' \"error: convert is not installed, exiting...\"\n    exit 1\nfi",
+            "prefix": "check_if_a_program_is_in_the_user's_path",
+            "description": "Check if a program is in the user's PATH"
+        },
+        {
+            "body": "date() {\n    # Usage: date \"format\"\n    # See: 'man strftime' for format.\n    printf \"%(\\$1)T\\\\n\" \"-1\"\n}",
+            "prefix": "get_the_current_date_using_`strftime`",
+            "description": "Get the current date using `strftime`"
+        },
+        {
+            "body": "$ : \\\\u\n# Expand the parameter as if it were a prompt string.\n$ printf '%s\\n' \"${_@P}\"",
+            "prefix": "get_the_username_of_the_current_user",
+            "description": "Get the username of the current user"
+        },
+        {
+            "body": "uuid() {\n    # Usage: uuid\n    C=\"89ab\"\n\n    for ((N=0;N<16;++N)); do\n        B=\"$((RANDOM%256))\"\n\n        case \"\\$N\" in\n            6)  printf '4%x' \"$((B%16))\" ;;\n            8)  printf '%c%x' \"${C:$RANDOM%${#C}:1}\" \"$((B%16))\" ;;\n\n            3|5|7|9)\n                printf '%02x-' \"\\$B\"\n            ;;\n\n            *)\n                printf '%02x' \"\\$B\"\n            ;;\n        esac\n    done\n\n    printf '\\n'\n}",
+            "prefix": "generate_a_uuid_v4",
+            "description": "Generate a UUID V4"
+        },
+        {
+            "body": "bar() {\n    # Usage: bar 1 10\n    #            ^----- Elapsed Percentage (0-100).\n    #               ^-- Total length in chars.\n    ((elapsed=\\$1*\\$2/100))\n\n    # Create the bar with spaces.\n    printf -v prog  \"%\\${elapsed}s\"\n    printf -v total \"%$((\\$2-elapsed))s\"\n\n    printf '%s\\r' \"[${prog// /-}\\${total}]\"\n}",
+            "prefix": "progress_bars",
+            "description": "Progress bars"
+        },
+        {
+            "body": "get_functions() {\n    # Usage: get_functions\n    IFS=$'\\n' read -d \"\" -ra functions < <(declare -F)\n    printf '%s\\n' \"${functions[@]//declare -f }\"\n}",
+            "prefix": "get_the_list_of_functions_in_a_script",
+            "description": "Get the list of functions in a script"
+        },
+        {
+            "body": "# alias\nls\n\n# command\n# shellcheck disable=SC1001\n\\ls",
+            "prefix": "bypass_shell_aliases",
+            "description": "Bypass shell aliases"
+        },
+        {
+            "body": "# function\nls\n\n# command\ncommand ls",
+            "prefix": "bypass_shell_functions",
+            "description": "Bypass shell functions"
+        },
+        {
+            "body": "bkr() {\n    (nohup \"$@\" &>/dev/null &)\n}\n\nbkr ./some_script.sh # some_script.sh is now running in the background",
+            "prefix": "run_a_command_in_the_background",
+            "description": "Run a command in the background"
+        },
+        {
+            "body": "to_upper() {\n  local -n ptr=\\${1}\n\n  ptr=${ptr^^}\n}\n\nfoo=\"bar\"\nto_upper foo\nprintf \"%s\\n\" \"\\${foo}\" # BAR",
+            "prefix": "capture_the_return_value_of_a_function_without_command_substitution",
+            "description": "Capture the return value of a function without command substitution"
+        }
+    ]
+}
