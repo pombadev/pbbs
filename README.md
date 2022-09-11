@@ -9,6 +9,10 @@
 
 All of the snippets were extracted, re-formatted and modified by me from the [pure-bash-bible] repo.
 
+# Demo
+
+[![Demo](./images/demo.gif)](./images/demo.gif)
+
 # Installation
 
 Launch VS Code Quick Open (Ctrl+P), paste the following command, and press enter.

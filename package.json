@@ -5,11 +5,11 @@
   "description": "A collection of pure bash alternatives to external processes.",
   "version": "0.1.1",
   "publisher": "pombadev",
-  "icon": "src/icon.png",
+  "icon": "images/icon.png",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pombadev/pbbs.git"
+    "url": "https://github.com/pombadev/pbbs.git"
   },
   "bugs": {
     "url": "https://github.com/pombadev/pbbs/issues"
