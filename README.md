@@ -1,9 +1,6 @@
 [pure-bash-bible]: https://github.com/dylanaraps/pure-bash-bible
 
-# pbbs
-
-[![Marketplace](https://img.shields.io/visual-studio-marketplace/v/pombadev.pbbs?label=marketplace%20version&style=flat-square)](https://marketplace.visualstudio.com/items?itemName=pombadev.pbbs)
-[![GitHub](https://img.shields.io/github/package-json/v/pombadev/pbbs?label=github%20version&style=flat-square)](https://marketplace.visualstudio.com/items?itemName=pombadev.pbbs)
+# pbbs [![Marketplace](https://img.shields.io/visual-studio-marketplace/v/pombadev.pbbs?label=marketplace%20version&style=flat-square)](https://marketplace.visualstudio.com/items?itemName=pombadev.pbbs) [![GitHub](https://img.shields.io/github/package-json/v/pombadev/pbbs?label=github%20version&style=flat-square)](https://marketplace.visualstudio.com/items?itemName=pombadev.pbbs)
 
 `pbbs` is a VS Code snippets extension that has a collection of pure bash alternatives to external processes.
 
